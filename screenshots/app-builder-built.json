@@ -1,0 +1,38 @@
+{
+  "url": "http://127.0.0.1:8081/",
+  "viewports": {
+    "desktop": {
+      "width": 1280,
+      "height": 800,
+      "status": 200,
+      "title": "Amienigma AI",
+      "hasCanvas": false,
+      "bodyTextLen": 319,
+      "bodyTextHash": "1a81945dd9eb9443701699e1693301340aeb99099ad464d2d2f05a8396441abe",
+      "bodyTextPrefix": "Amienigma AI Chat Image Video Discover Golden hour ride Rainy ne",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-built.png"
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "status": 200,
+      "title": "Amienigma AI",
+      "hasCanvas": false,
+      "bodyTextLen": 258,
+      "bodyTextHash": "b7db60f225aa4044ea44f96083d883c0322f9ef0d6698d5b139e22aa72ebca99",
+      "bodyTextPrefix": "Amienigma AI AMIENIGMA AI Where should we start? Ask anything. P",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-built-mobile.png"
+    }
+  },
+  "brandWarnings": [],
+  "authWarnings": [],
+  "verdictFile": "/workspace/screenshots/app-builder-built.json",
+  "divergesFromBaseline": false,
+  "baselineReasons": []
+}

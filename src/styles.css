@@ -1,0 +1,230 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Plus Jakarta Sans", "Segoe UI", system-ui, sans-serif;
+  --font-display: "Fraunces", "Times New Roman", serif;
+
+  --color-bg: #faf9f7;
+  --color-bg-elevated: #ffffff;
+  --color-bg-subtle: #f3f1ed;
+  --color-fg: #171717;
+  --color-fg-muted: #5c5c5c;
+  --color-fg-subtle: #8a8a8a;
+  --color-border: color-mix(in oklab, var(--color-fg) 10%, transparent);
+  --color-border-strong: color-mix(in oklab, var(--color-fg) 18%, transparent);
+  --color-accent: #0064e0;
+  --color-accent-fg: #ffffff;
+  --color-danger: #e11d48;
+  --color-danger-fg: #ffffff;
+  --color-orbit-cyan: #22d3ee;
+  --color-orbit-blue: #3b82f6;
+  --color-orbit-violet: #8b5cf6;
+  --color-orbit-pink: #f472b6;
+
+  --radius-xs: 6px;
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --radius-pill: 999px;
+
+  --shadow-soft: 0 8px 30px color-mix(in oklab, var(--color-fg) 6%, transparent);
+  --shadow-lift: 0 16px 40px color-mix(in oklab, var(--color-fg) 10%, transparent);
+}
+
+html.dark {
+  --color-bg: #0e0e10;
+  --color-bg-elevated: #161618;
+  --color-bg-subtle: #1c1c1f;
+  --color-fg: #f4f4f5;
+  --color-fg-muted: #a1a1aa;
+  --color-fg-subtle: #71717a;
+  --color-border: color-mix(in oklab, var(--color-fg) 12%, transparent);
+  --color-border-strong: color-mix(in oklab, var(--color-fg) 22%, transparent);
+  --color-accent: #3b82f6;
+  --shadow-soft: 0 8px 30px rgb(0 0 0 / 0.35);
+  --shadow-lift: 0 16px 40px rgb(0 0 0 / 0.5);
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  html,
+  body,
+  #app {
+    min-height: 100dvh;
+    background: var(--color-bg);
+    color: var(--color-fg);
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  textarea {
+    font-family: inherit;
+  }
+
+  ::selection {
+    background: color-mix(in oklab, var(--color-accent) 24%, transparent);
+  }
+}
+
+@keyframes orbit-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes orbit-breathe {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.9;
+    transform: scale(1.04);
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes wave {
+  0%,
+  100% {
+    transform: scaleY(0.4);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: -100% 0;
+  }
+}
+
+.orbit-ring {
+  position: relative;
+  width: 160px;
+  height: 160px;
+}
+
+@media (min-width: 768px) {
+  .orbit-ring {
+    width: 220px;
+    height: 220px;
+  }
+}
+
+.orbit-ring::before {
+  content: "";
+  position: absolute;
+  inset: -18px;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 200deg,
+    var(--color-orbit-cyan),
+    var(--color-orbit-blue),
+    var(--color-orbit-violet),
+    var(--color-orbit-pink),
+    var(--color-orbit-cyan)
+  );
+  filter: blur(28px);
+  opacity: 0.45;
+  animation: orbit-breathe 4.5s ease-in-out infinite;
+}
+
+.orbit-ring-disk {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  padding: 14px;
+  background: conic-gradient(
+    from 200deg,
+    var(--color-orbit-cyan),
+    var(--color-orbit-blue) 32%,
+    var(--color-orbit-violet) 58%,
+    var(--color-orbit-pink) 78%,
+    var(--color-orbit-cyan)
+  );
+  animation: orbit-spin 14s linear infinite;
+}
+
+.orbit-ring-core {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: var(--color-bg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orbit-ring::before,
+  .orbit-ring-disk {
+    animation: none;
+  }
+}
+
+.stagger-in > * {
+  animation: fade-up 500ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.stagger-in > *:nth-child(1) {
+  animation-delay: 40ms;
+}
+.stagger-in > *:nth-child(2) {
+  animation-delay: 90ms;
+}
+.stagger-in > *:nth-child(3) {
+  animation-delay: 140ms;
+}
+.stagger-in > *:nth-child(4) {
+  animation-delay: 190ms;
+}
+.stagger-in > *:nth-child(5) {
+  animation-delay: 240ms;
+}
+
+.thinking-shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--color-fg-subtle) 0%,
+    var(--color-fg) 50%,
+    var(--color-fg-subtle) 100%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer 1.6s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stagger-in > *,
+  .thinking-shimmer {
+    animation: none;
+    color: var(--color-fg-muted);
+    background: none;
+  }
+}
