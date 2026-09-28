@@ -1,5 +1,5 @@
 {
-  "name": "app-builder-workspace",
+  "name": "amienigma-llm",
   "private": true,
   "sideEffects": false,
   "type": "module",
