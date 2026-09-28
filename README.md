@@ -1,50 +1,88 @@
-Amienigma AI
+# Amienigma AI
 
-Ask anything. Paint stills. Film short clips.
+**Ask anything. Paint stills. Film short clips.**
 
-Amienigma AI is a personal studio for conversation, still images, and short video. Write in the chat, generate an image, then turn that still into motion with one tap.
+Amienigma AI is the creative intelligence of [The Original Enigma Studios](https://amienigma.art.blog/) — a personal studio for chat, stills, and short film. Rooted in Neglect Archive, Dark Romanticism, and cybercore night.
 
+> Information is the mission.  
+> Curiosity is the vehicle.  
+> Exploration never ends.
 
-What you can do:
+Where the mission is every mission that is about information.
 
-Chat. Ask for plans, writing, explanations, or ideas. Replies stream in as they are written. Previous chats stay on this device.
+---
 
-Image. Describe a scene, choose a frame (1:1, 16:9, 9:16, 4:3, or 3:4), and generate a still.
+## What you can do
 
-Video. Describe a shot, choose 16:9, 9:16, or 1:1, and film a 6- or 10-second clip.
+| Mode | What happens |
+|------|----------------|
+| **Chat** | Ask for plans, writing, explanations, or ideas. Replies stream in. Previous chats stay on this device. |
+| **Image** | Describe a scene, choose a frame (1:1, 16:9, 9:16, 4:3, or 3:4), and generate a still. |
+| **Video** | Describe a shot, choose 16:9, 9:16, or 1:1, and film a 6- or 10-second clip. |
+| **Animate stills** | After an image is made, tap Animate to keep the first frame and add camera move and motion. |
+| **Discover** | Browse prompt ideas and remix them as an image or a video. |
+| **Talk** | Speak into the composer instead of typing. Read a reply aloud from the message actions. |
 
-Animate stills. After an image is made, tap Animate to keep the first frame and add camera move and motion.
+Light and dark themes switch from the header. Images and clips you create are kept in a personal reel in the browser.
 
-Discover. Browse prompt ideas and remix them as an image or a video.
+In chat you write · what happens:
 
-Talk. Speak into the composer instead of typing. Read a reply aloud from the message actions.
+- A normal question → Amienigma answers  
+- “Create an image of…” → a still is generated  
+- “Make a video of…” → a clip is filmed  
+- “Animate this” → the latest still becomes a video  
 
-Light and dark. Switch the theme from the header.
+---
 
-Images and clips you create are kept in a personal reel in the browser.
+## Stack
 
-In chat You write What happens
-A normal question? Amienigma answers
-"Create an image of…"
-A still is generated
+React 19 · TanStack Start · Tailwind CSS · xAI (Grok) for chat, images, and video.
 
-"Make a video of…"
-A clip is filmed
-"Animate this"
-The latest still becomes a video
+Orbit wordmark. Fraunces + Plus Jakarta Sans. Cream and dark.
 
+---
 
+## Run it locally
 
-Run it locally:
-You need Node.js 22.
+You need **Node.js 22**.
+
+```bash
 npm install
 export XAI_API_KEY=your_key
 npm run dev
-
+```
 
 The key is read only on the server. It is never sent to the browser.
 
+```bash
 npm run build
 npm run typecheck
-Stack
-React 19, TanStack Start, Tailwind CSS, and the xAI API for chat, images, and video.
+```
+
+---
+
+## Signature look — 108 LOCK
+
+Amienigma AI’s cream/dark studio sits beside **108 LOCK**, the night grade and symbol stamp of the house:
+
+> *108 Night is teal weather with a magenta pulse, analog grain, and one true object from the day — nothing added to win the picture.*
+
+Teal `#164e57` · Magenta `#c21e6b` · Courier · 0px radius · Texas symbols.
+
+→ Visual IP (legacy repo name until renamed): [amienigma-flagship-mobile-ui-demo](https://github.com/Amienigma/amienigma-flagship-mobile-ui-demo)
+
+---
+
+## Neglect Archive
+
+Art survives where systems decay. This is not a portfolio. This is a corridor.
+
+Dark Romanticism / Contemporary Gothic. Studio: The Original Enigma Studios / Amienigma Studios.
+
+- Blog: [amienigma.art.blog](https://amienigma.art.blog/)  
+- GitHub: [Amienigma](https://github.com/Amienigma)  
+- Vision notebook (Archive Intelligence): [amienigma_ai](https://github.com/Amienigma/amienigma_ai)
+
+---
+
+*The Original Enigma Studios · Amienigma AI*
