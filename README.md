@@ -42,6 +42,18 @@ Orbit wordmark. Fraunces + Plus Jakarta Sans. Cream and dark.
 
 ---
 
+## Prompts
+
+Reusable system and role prompts live in [`prompts/`](./prompts/):
+
+- `system-amienigma-ai.md` — default Amienigma AI voice
+- `neglect-archive-explorer.md` — internet archaeology / rabbit holes
+- `108-lock-creative-director.md` — 108 LOCK Law creative director
+
+See [`prompts/README.md`](./prompts/README.md) for the index.
+
+---
+
 ## Run it locally
 
 You need **Node.js 22**.
