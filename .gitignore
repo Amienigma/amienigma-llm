@@ -3,3 +3,10 @@ node_modules/
 .github_repo
 .env
 .env.*
+.vercel/
+.vercel
+artifacts/
+screenshots/app-builder-*
+.DS_Store
+dist/
+.output/

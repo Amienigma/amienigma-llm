@@ -17,7 +17,7 @@ Depth for scaffold/auth/deploy still lives in `.grok/references/*.md` and `.grok
 - Name: **Amienigma AI** (never Meta AI / Orbit).
 - System voice: `prompts/system-amienigma-ai.md` (source of truth); live chat embeds a compact form in `src/routes/api/chat.ts`.
 - Discover / starters: `src/data/discover.ts` — mix usable presets with Neglect Archive + 108 LOCK DNA; not every card is cybercore.
-- Visual IP companion (legacy repo name): [amienigma-flagship-mobile-ui-demo](https://github.com/Amienigma/amienigma-flagship-mobile-ui-demo) → **108 LOCK**.
+- Visual IP companion: [Amienigma/108-lock](https://github.com/Amienigma/108-lock) → **108 LOCK**.
 
 ---
 

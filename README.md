@@ -81,7 +81,7 @@ Amienigma AI’s cream/dark studio sits beside **108 LOCK**, the night grade and
 
 Teal `#164e57` · Magenta `#c21e6b` · Courier · 0px radius · Texas symbols.
 
-→ Visual IP (legacy repo name until renamed): [amienigma-flagship-mobile-ui-demo](https://github.com/Amienigma/amienigma-flagship-mobile-ui-demo)
+→ Visual IP: [108 LOCK](https://github.com/Amienigma/108-lock)
 
 ---
 
