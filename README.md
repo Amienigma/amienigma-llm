@@ -2,6 +2,9 @@
 
 **Ask anything. Paint stills. Film short clips.**
 
+**Live:** [amienigma-llm.vercel.app](https://amienigma-llm.vercel.app)  
+*(Chat / stills / video need a server `XAI_API_KEY` — UI is up without it.)*
+
 Amienigma AI is the creative intelligence of [The Original Enigma Studios](https://amienigma.art.blog/) — a personal studio for chat, stills, and short film. Rooted in Neglect Archive, Dark Romanticism, and cybercore night.
 
 > Information is the mission.  
