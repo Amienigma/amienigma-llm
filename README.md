@@ -78,6 +78,8 @@ npm run typecheck
 
 ## Signature look — 108 LOCK
 
+**Live grade tool:** [108-lock.vercel.app](https://108-lock.vercel.app) · [repo](https://github.com/Amienigma/108-lock)
+
 Amienigma AI’s cream/dark studio sits beside **108 LOCK**, the night grade and symbol stamp of the house:
 
 > *108 Night is teal weather with a magenta pulse, analog grain, and one true object from the day — nothing added to win the picture.*
