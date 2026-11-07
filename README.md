@@ -3,7 +3,7 @@
 **Ask anything. Paint stills. Film short clips.**
 
 **Live:** [amienigma-llm.vercel.app](https://amienigma-llm.vercel.app)  
-*(Chat / stills / video need a server `XAI_API_KEY` — UI is up without it.)*
+*(Chat needs a server `OPENROUTER_API_KEY` or `XAI_API_KEY`; stills and video still need `XAI_API_KEY`. The UI works without keys.)*
 
 Amienigma AI is the creative intelligence of [The Original Enigma Studios](https://amienigma.art.blog/) — a personal studio for chat, stills, and short film. Rooted in Neglect Archive, Dark Romanticism, and cybercore night.
 
@@ -19,7 +19,7 @@ Where the mission is every mission that is about information.
 
 | Mode | What happens |
 |------|----------------|
-| **Chat** | Ask for plans, writing, explanations, or ideas. Replies stream in. Previous chats stay on this device. |
+| **Chat** | Ask for plans, writing, explanations, or ideas. Replies arrive from the configured AI provider. Previous chats stay on this device. |
 | **Image** | Describe a scene, choose a frame (1:1, 16:9, 9:16, 4:3, or 3:4), and generate a still. |
 | **Video** | Describe a shot, choose 16:9, 9:16, or 1:1, and film a 6- or 10-second clip. |
 | **Animate stills** | After an image is made, tap Animate to keep the first frame and add camera move and motion. |
@@ -39,7 +39,7 @@ In chat you write · what happens:
 
 ## Stack
 
-React 19 · TanStack Start · Tailwind CSS · xAI (Grok) for chat, images, and video.
+React 19 · TanStack Start · Tailwind CSS · OpenRouter or xAI for chat · xAI for images and video.
 
 Orbit wordmark. Fraunces + Plus Jakarta Sans. Cream and dark.
 
@@ -63,11 +63,45 @@ You need **Node.js 22**.
 
 ```bash
 npm install
-export XAI_API_KEY=your_key
+export OPENROUTER_API_KEY=your_key
 npm run dev
 ```
 
-The key is read only on the server. It is never sent to the browser.
+The key is read only on the server. It is never sent to the browser. The existing UI
+posts conversation history to `/api/chat`, which calls OpenRouter and returns plain
+text; no browser API key or separate server is needed.
+
+### Server configuration
+
+Set these in the hosting project's server environment (or export them locally).
+`.env.example` documents the names; it is not automatically loaded by the app.
+Never use a `VITE_` prefix for an API key or commit a real key.
+
+- `OPENROUTER_API_KEY`: enables OpenRouter chat and takes priority over xAI chat.
+- `OPENROUTER_MODEL`: optional model ID; defaults to `openrouter/free`. The free
+  router chooses an available free model, so the selected model can vary. Free
+  models can have rate limits and availability changes. To use the originally
+  requested `meta-llama/llama-3.1-8b-instruct:free` was absent from OpenRouter's
+  public catalog when checked on November 7, 2026. Its non-free counterpart is
+  paid, so this integration does not silently select it. Set any currently
+  available model ID explicitly if you prefer one.
+- `OPENROUTER_SITE_URL`: optional public app URL for OpenRouter's `HTTP-Referer`
+  attribution header. Attribution is optional, not an authentication requirement.
+  `X-Title` is sent as `amienigma-llm`.
+- `XAI_API_KEY`: continues to power images/video, and chat when no OpenRouter key
+  is configured. A failing OpenRouter request does not silently switch providers.
+
+OpenRouter chat uses non-streaming completions and the existing Amienigma creative
+system prompt. The xAI chat path keeps its existing streaming behavior. Requests
+accept 1–20 user/assistant messages, each up to 12,000 characters. Provider errors
+are sanitized and requests time out after 60 seconds.
+
+For Vercel, add `OPENROUTER_API_KEY` to the appropriate environment, optionally set
+`OPENROUTER_MODEL` and `OPENROUTER_SITE_URL`, then deploy the reviewed changes.
+This PR does not configure hosting secrets, deploy, or validate a real provider key.
+OpenRouter chat does not add image or video support; those still require xAI.
+The endpoint remains public, like the existing chat route: apply hosting rate limits
+or access controls before exposing a key-backed app to untrusted traffic.
 
 ```bash
 npm run build

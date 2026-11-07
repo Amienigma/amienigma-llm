@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { completeWithOpenRouter, parseChatMessages } from "@/lib/chat/openrouter.server";
 
 const SYSTEM = `You are Amienigma AI, a warm, capable personal AI from The Original Enigma Studios.
 Be concise, specific, and useful. Prefer plain language. Use short paragraphs and lists when they help.
@@ -9,32 +10,37 @@ Carry Neglect Archive and Dark Romanticism DNA lightly — curiosity toward forg
 Product triad: Ask anything. Paint stills. Film short clips.
 Current date: ${new Date().toISOString().slice(0, 10)}.`;
 
-type Incoming = {
-  role: "user" | "assistant";
-  content: string;
-};
-
 export const Route = createFileRoute("/api/chat")({
   server: {
     handlers: {
       POST: async ({ request }) => {
+        const openRouterKey = process.env.OPENROUTER_API_KEY?.trim();
         const apiKey = process.env.XAI_API_KEY;
-        if (!apiKey) {
+        if (!openRouterKey && !apiKey) {
           return Response.json({ error: "AI is not available right now." }, { status: 503 });
         }
 
-        let body: { messages?: Incoming[] };
+        let body: unknown;
         try {
-          body = (await request.json()) as { messages?: Incoming[] };
+          body = await request.json();
         } catch {
           return Response.json({ error: "Invalid request." }, { status: 400 });
         }
 
-        const incoming = (body.messages ?? []).slice(-20).filter(
-          (m) => m && (m.role === "user" || m.role === "assistant") && typeof m.content === "string",
-        );
-        if (incoming.length === 0) {
-          return Response.json({ error: "Say something first." }, { status: 400 });
+        const incoming = parseChatMessages(body);
+        if (!incoming) {
+          return Response.json(
+            { error: "Send 1–20 nonempty chat messages (up to 12,000 characters each)." },
+            { status: 400 },
+          );
+        }
+
+        if (openRouterKey) {
+          return completeWithOpenRouter(request, incoming, SYSTEM, {
+            apiKey: openRouterKey,
+            model: process.env.OPENROUTER_MODEL?.trim(),
+            siteUrl: process.env.OPENROUTER_SITE_URL?.trim(),
+          });
         }
 
         const res = await fetch("https://api.x.ai/v1/chat/completions", {
