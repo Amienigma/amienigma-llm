@@ -137,6 +137,7 @@ export function AppShell() {
     const conv = useOrbit.getState().conversations.find((c) => c.id === convId);
     const history = (conv?.messages ?? [])
       .filter((m) => m.id !== assistantId && (m.content || m.imageUrl || m.videoUrl))
+      .slice(-20)
       .map((m) => ({
         role: m.role,
         content: m.videoUrl
