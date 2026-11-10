@@ -10,8 +10,13 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as PinkrootRouteImport } from './routes/pinkroot'
+import { Route as TranslatorRouteImport } from './routes/translator'
 import { Route as ApiChatRouteImport } from './routes/api/chat'
+import { Route as ApiConsoleRouteImport } from './routes/api/console'
 import { Route as ApiImagineRouteImport } from './routes/api/imagine'
+import { Route as ApiProvidersRouteImport } from './routes/api/providers'
+import { Route as ApiTranslateRouteImport } from './routes/api/translate'
 import { Route as ApiVideoRouteImport } from './routes/api/video'
 
 const IndexRoute = IndexRouteImport.update({
@@ -19,14 +24,39 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PinkrootRoute = PinkrootRouteImport.update({
+  id: '/pinkroot',
+  path: '/pinkroot',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TranslatorRoute = TranslatorRouteImport.update({
+  id: '/translator',
+  path: '/translator',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiChatRoute = ApiChatRouteImport.update({
   id: '/api/chat',
   path: '/api/chat',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiConsoleRoute = ApiConsoleRouteImport.update({
+  id: '/api/console',
+  path: '/api/console',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiImagineRoute = ApiImagineRouteImport.update({
   id: '/api/imagine',
   path: '/api/imagine',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiProvidersRoute = ApiProvidersRouteImport.update({
+  id: '/api/providers',
+  path: '/api/providers',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiTranslateRoute = ApiTranslateRouteImport.update({
+  id: '/api/translate',
+  path: '/api/translate',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiVideoRoute = ApiVideoRouteImport.update({
@@ -37,35 +67,83 @@ const ApiVideoRoute = ApiVideoRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/pinkroot': typeof PinkrootRoute
+  '/translator': typeof TranslatorRoute
   '/api/chat': typeof ApiChatRoute
+  '/api/console': typeof ApiConsoleRoute
   '/api/imagine': typeof ApiImagineRoute
+  '/api/providers': typeof ApiProvidersRoute
+  '/api/translate': typeof ApiTranslateRoute
   '/api/video': typeof ApiVideoRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/pinkroot': typeof PinkrootRoute
+  '/translator': typeof TranslatorRoute
   '/api/chat': typeof ApiChatRoute
+  '/api/console': typeof ApiConsoleRoute
   '/api/imagine': typeof ApiImagineRoute
+  '/api/providers': typeof ApiProvidersRoute
+  '/api/translate': typeof ApiTranslateRoute
   '/api/video': typeof ApiVideoRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/pinkroot': typeof PinkrootRoute
+  '/translator': typeof TranslatorRoute
   '/api/chat': typeof ApiChatRoute
+  '/api/console': typeof ApiConsoleRoute
   '/api/imagine': typeof ApiImagineRoute
+  '/api/providers': typeof ApiProvidersRoute
+  '/api/translate': typeof ApiTranslateRoute
   '/api/video': typeof ApiVideoRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/api/chat' | '/api/imagine' | '/api/video'
+  fullPaths:
+    | '/'
+    | '/pinkroot'
+    | '/translator'
+    | '/api/chat'
+    | '/api/console'
+    | '/api/imagine'
+    | '/api/providers'
+    | '/api/translate'
+    | '/api/video'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/api/chat' | '/api/imagine' | '/api/video'
-  id: '__root__' | '/' | '/api/chat' | '/api/imagine' | '/api/video'
+  to:
+    | '/'
+    | '/pinkroot'
+    | '/translator'
+    | '/api/chat'
+    | '/api/console'
+    | '/api/imagine'
+    | '/api/providers'
+    | '/api/translate'
+    | '/api/video'
+  id:
+    | '__root__'
+    | '/'
+    | '/pinkroot'
+    | '/translator'
+    | '/api/chat'
+    | '/api/console'
+    | '/api/imagine'
+    | '/api/providers'
+    | '/api/translate'
+    | '/api/video'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  PinkrootRoute: typeof PinkrootRoute
+  TranslatorRoute: typeof TranslatorRoute
   ApiChatRoute: typeof ApiChatRoute
+  ApiConsoleRoute: typeof ApiConsoleRoute
   ApiImagineRoute: typeof ApiImagineRoute
+  ApiProvidersRoute: typeof ApiProvidersRoute
+  ApiTranslateRoute: typeof ApiTranslateRoute
   ApiVideoRoute: typeof ApiVideoRoute
 }
 
@@ -78,6 +156,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/pinkroot': {
+      id: '/pinkroot'
+      path: '/pinkroot'
+      fullPath: '/pinkroot'
+      preLoaderRoute: typeof PinkrootRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/translator': {
+      id: '/translator'
+      path: '/translator'
+      fullPath: '/translator'
+      preLoaderRoute: typeof TranslatorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/chat': {
       id: '/api/chat'
       path: '/api/chat'
@@ -85,11 +177,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiChatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/console': {
+      id: '/api/console'
+      path: '/api/console'
+      fullPath: '/api/console'
+      preLoaderRoute: typeof ApiConsoleRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/imagine': {
       id: '/api/imagine'
       path: '/api/imagine'
       fullPath: '/api/imagine'
       preLoaderRoute: typeof ApiImagineRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/providers': {
+      id: '/api/providers'
+      path: '/api/providers'
+      fullPath: '/api/providers'
+      preLoaderRoute: typeof ApiProvidersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/translate': {
+      id: '/api/translate'
+      path: '/api/translate'
+      fullPath: '/api/translate'
+      preLoaderRoute: typeof ApiTranslateRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/video': {
@@ -104,8 +217,13 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  PinkrootRoute: PinkrootRoute,
+  TranslatorRoute: TranslatorRoute,
   ApiChatRoute: ApiChatRoute,
+  ApiConsoleRoute: ApiConsoleRoute,
   ApiImagineRoute: ApiImagineRoute,
+  ApiProvidersRoute: ApiProvidersRoute,
+  ApiTranslateRoute: ApiTranslateRoute,
   ApiVideoRoute: ApiVideoRoute,
 }
 export const routeTree = rootRouteImport

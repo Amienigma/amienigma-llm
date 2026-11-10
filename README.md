@@ -25,6 +25,8 @@ Where the mission is every mission that is about information.
 | **Animate stills** | After an image is made, tap Animate to keep the first frame and add camera move and motion. |
 | **Discover** | Browse prompt ideas and remix them as an image or a video. |
 | **Talk** | Speak into the composer instead of typing. Read a reply aloud from the message actions. |
+| **Translate** | Reword a hard message with the Attachment Translator, from pasted text or a `.txt` / `.md` / `.json` / `.csv` file. |
+| **Pinkroot** | Inspect which language-model keys the server has configured and send a live request through the console. |
 
 Light and dark themes switch from the header. Images and clips you create are kept in a personal reel in the browser.
 
@@ -39,7 +41,7 @@ In chat you write · what happens:
 
 ## Stack
 
-React 19 · TanStack Start · Tailwind CSS · OpenRouter or xAI for chat · xAI for images and video.
+React 19 · TanStack Start · Tailwind CSS · OpenRouter or xAI for chat · optional OpenAI, Anthropic, and Gemini chat adapters · xAI for images and video.
 
 Orbit wordmark. Fraunces + Plus Jakarta Sans. Cream and dark.
 
@@ -90,6 +92,18 @@ Never use a `VITE_` prefix for an API key or commit a real key.
   `X-Title` is sent as `amienigma-llm`.
 - `XAI_API_KEY`: continues to power images/video, and chat when no OpenRouter key
   is configured. A failing OpenRouter request does not silently switch providers.
+- `OPENAI_API_KEY`, `ANTHROPIC_API_KEY`, `GEMINI_API_KEY`: optional extra chat
+  providers used by `/api/console`, `/api/translate`, and the shared provider
+  layer. Each adapter turns on only when its key is set. Optional model overrides
+  are `OPENAI_MODEL`, `ANTHROPIC_MODEL`, `GEMINI_MODEL`, and `XAI_MODEL`.
+
+### Studio sections
+
+- `/` — existing chat, image, video, and Discover studio.
+- `/translator` — Attachment Translator from [amitranslation](https://github.com/Amienigma/amitranslation). It rewrites relationship messages with a safety check, then wording suggestions. Paste text or upload a `.txt`, `.md`, `.json`, or `.csv` file (max 80 KB / 12,000 characters). PDF and Word files are not supported, to avoid heavy document parsers. Requests go to `/api/translate`.
+- `/pinkroot` — PINKROOT provider console from [pinkroot](https://github.com/Amienigma/pinkroot). The vault and registry show which server keys are configured, never the values. The request console posts to `/api/console` and can only call configured providers (not an arbitrary URL). Plugins, sample spend, and the animated telemetry bars are labeled sample data. The standalone Linux WebSocket bash PTY, host password login, and installer script were not ported — they need a dedicated machine, not this Vercel app.
+
+`GET /api/providers` returns public provider status without secrets.
 
 OpenRouter chat uses non-streaming completions and the existing Amienigma creative
 system prompt. The xAI chat path keeps its existing streaming behavior. Requests
