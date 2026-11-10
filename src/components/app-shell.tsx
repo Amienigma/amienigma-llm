@@ -1,17 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import {
-  Clapperboard,
-  Compass,
-  ImageIcon,
-  Menu,
-  MessageCircle,
-  Moon,
-  Plus,
-  Sun,
-  Trash2,
-  X,
-} from "lucide-react";
+import { Menu, Moon, Plus, Sun, Trash2, X } from "lucide-react";
 import { DesktopNav } from "@/components/desktop-nav";
+import { StudioBottomNav } from "@/components/studio-nav";
 import { ChatEmptyHint, ChatThread } from "@/components/chat-thread";
 import { Composer } from "@/components/composer";
 import { DiscoverFeed } from "@/components/discover-feed";
@@ -21,7 +11,7 @@ import { MotionStudio } from "@/components/motion-studio";
 import { OrbitRing } from "@/components/orbit-ring";
 import { isImageIntent, isVideoIntent, wantsAnimateLastImage } from "@/lib/chat/image-intent";
 import { applyTheme, ensureConversation, useOrbit } from "@/lib/chat/store";
-import type { AppView, ChatMessage, ImagineRatio, VideoDuration, VideoRatio } from "@/lib/chat/types";
+import type { ChatMessage, ImagineRatio, VideoDuration, VideoRatio } from "@/lib/chat/types";
 import { startVideo, waitForVideo } from "@/lib/chat/video";
 import { cn, uid } from "@/lib/utils";
 
@@ -391,7 +381,7 @@ export function AppShell() {
         />
       ) : null}
 
-      <BottomNav />
+      <StudioBottomNav />
     </div>
   );
 }
@@ -524,46 +514,5 @@ function Sidebar() {
         )}
       </nav>
     </aside>
-  );
-}
-
-function BottomNav() {
-  const view = useOrbit((s) => s.view);
-  const items: { id: AppView; label: string; icon: typeof Compass }[] = [
-    { id: "home", label: "Chat", icon: MessageCircle },
-    { id: "imagine", label: "Image", icon: ImageIcon },
-    { id: "motion", label: "Video", icon: Clapperboard },
-    { id: "discover", label: "Discover", icon: Compass },
-  ];
-
-  return (
-    <nav className="flex shrink-0 border-t border-border bg-bg pb-[env(safe-area-inset-bottom)] md:hidden">
-      {items.map((item) => {
-        const Icon = item.icon;
-        const active = item.id === "home" ? view === "home" || view === "chat" : view === item.id;
-        return (
-          <button
-            key={item.id}
-            type="button"
-            className={cn(
-              "flex h-14 flex-1 flex-col items-center justify-center gap-0.5 text-xs font-medium",
-              active ? "text-fg" : "text-fg-subtle",
-            )}
-            onClick={() => {
-              if (item.id === "home") {
-                const s = useOrbit.getState();
-                const conv = s.conversations.find((c) => c.id === s.activeId);
-                s.setView(conv && conv.messages.length > 0 ? "chat" : "home");
-              } else {
-                useOrbit.getState().setView(item.id);
-              }
-            }}
-          >
-            <Icon className="size-5" />
-            {item.label}
-          </button>
-        );
-      })}
-    </nav>
   );
 }
