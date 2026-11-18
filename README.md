@@ -87,9 +87,21 @@ Never use a `VITE_` prefix for an API key or commit a real key.
   public catalog when checked on November 7, 2026. Its non-free counterpart is
   paid, so this integration does not silently select it. Set any currently
   available model ID explicitly if you prefer one.
+- `OPENROUTER_FALLBACK_MODELS`: optional, comma-separated. When a model returns an
+  empty reply (the free router sometimes lands on a reasoning model that spends its
+  whole token budget thinking), the request is retried with these models using the
+  same key, up to 3 attempts in total within the 60 s deadline. Rate limits and
+  provider errors are never retried. Defaults to `google/gemma-4-31b-it:free`; set
+  `none` to disable. Recommended for reliability: set `OPENROUTER_MODEL` to one
+  fixed model, e.g. `google/gemma-4-31b-it:free` (free) or a low-cost paid model
+  such as `anthropic/claude-haiku-5.5`, instead of the random free router.
 - `OPENROUTER_SITE_URL`: optional public app URL for OpenRouter's `HTTP-Referer`
   attribution header. Attribution is optional, not an authentication requirement.
   `X-Title` is sent as `amienigma-llm`.
+- CORS: `/api/chat` answers cross-origin requests only from the origins listed in
+  `src/lib/chat/cors.ts` (currently `https://amienigma.github.io`, for NOCTURNE's
+  "Describe a beat"), with `Vary: Origin` on every response and an `OPTIONS`
+  preflight handler. Other origins are unaffected.
 - `XAI_API_KEY`: continues to power images/video, and chat when no OpenRouter key
   is configured. A failing OpenRouter request does not silently switch providers.
 - `OPENAI_API_KEY`, `ANTHROPIC_API_KEY`, `GEMINI_API_KEY`: optional extra chat
