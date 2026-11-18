@@ -1,6 +1,11 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { completeWithOpenRouter, parseChatMessages } from "./openrouter.server.ts";
+import {
+  completeWithOpenRouter,
+  DEFAULT_FALLBACK_MODELS,
+  parseChatMessages,
+  parseFallbackModels,
+} from "./openrouter.server.ts";
 
 const messages = [{ role: "user" as const, content: "Hello" }];
 const request = () => new Request("https://example.com/api/chat", { method: "POST" });
@@ -123,4 +128,62 @@ test("handles network failures and timeouts without exposing diagnostics", async
     assert.equal(response.status, status);
     assert.ok(!(await response.text()).includes("private diagnostic"));
   }
+});
+
+test("retries empty replies on fallback models with the same key, then gives up", async () => {
+  const seen: string[] = [];
+  const replies = [
+    Response.json({ choices: [{ message: { content: "" } }] }),
+    new Response("not json"),
+    Response.json({ choices: [{ message: { content: "Third time" } }] }),
+  ];
+  const fetchImpl = (async (_url, init) => {
+    seen.push(JSON.parse(init?.body as string).model);
+    assert.equal(new Headers(init?.headers).get("Authorization"), "Bearer fake");
+    return replies.shift()!;
+  }) as typeof fetch;
+  const ok = await completeWithOpenRouter(request(), messages, "system", {
+    apiKey: "fake",
+    fallbackModels: ["openrouter/free", "a/one:free", "b/two"],
+    fetchImpl,
+  });
+  assert.equal(ok.status, 200);
+  assert.equal(await ok.text(), "Third time");
+  assert.deepEqual(seen, ["openrouter/free", "a/one:free", "b/two"]);
+
+  let calls = 0;
+  const empty = (async () => {
+    calls++;
+    return Response.json({ choices: [{ message: { content: " " } }] });
+  }) as typeof fetch;
+  const fail = await completeWithOpenRouter(request(), messages, "system", {
+    apiKey: "fake",
+    fallbackModels: ["x/1", "x/2", "x/3", "x/4"],
+    fetchImpl: empty,
+  });
+  assert.equal(fail.status, 502);
+  assert.equal(calls, 3, "at most three attempts");
+});
+
+test("does not retry provider errors or rate limits", async () => {
+  for (const status of [401, 429, 500]) {
+    let calls = 0;
+    const fetchImpl = (async () => {
+      calls++;
+      return new Response("nope", { status });
+    }) as typeof fetch;
+    await completeWithOpenRouter(request(), messages, "system", {
+      apiKey: "fake",
+      fallbackModels: ["a/b"],
+      fetchImpl,
+    });
+    assert.equal(calls, 1);
+  }
+});
+
+test("parses OPENROUTER_FALLBACK_MODELS safely", () => {
+  assert.deepEqual(parseFallbackModels(undefined), [...DEFAULT_FALLBACK_MODELS]);
+  assert.deepEqual(parseFallbackModels(""), [...DEFAULT_FALLBACK_MODELS]);
+  assert.deepEqual(parseFallbackModels("none"), []);
+  assert.deepEqual(parseFallbackModels(" a/b:free , bad model!, c/d ,e/f"), ["a/b:free", "c/d"]);
 });
