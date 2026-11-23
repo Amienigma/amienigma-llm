@@ -477,7 +477,13 @@ test("renders the manifest with the per-app name", () => {
   const manifest = JSON.parse(renderWebManifest("wild-race.grok.me"));
   assert.equal(manifest.name, "Wild Race");
   assert.equal(manifest.short_name, "Wild Race");
-  assert.equal(manifest.icons[0].src, "/__grok/icon-180.png");
+  assert.equal(manifest.icons[0].src, "/__grok/icon-192-v3.png");
+  assert.equal(manifest.icons[1].src, "/__grok/icon-512-v3.png");
+  assert.equal(manifest.icons[2].src, "/__grok/icon-512-maskable-v3.png");
+  assert.equal(manifest.icons[2].purpose, "maskable");
+  assert.equal(manifest.icons[3].src, "/__grok/icon-180-v3.png");
+  assert.equal(manifest.background_color, "#000000");
+  assert.equal(manifest.theme_color, "#000000");
 });
 
 // Tripwires: the deployed-app path only works if Nitro scans server/ — an
@@ -495,6 +501,11 @@ test("nitro middleware and its bundled assets exist", () => {
   assert.match(middleware, /virtual:grok-og-identity/);
   readFileSync(join(TEMPLATE_ROOT, "scripts/install-page.html"));
   readFileSync(join(TEMPLATE_ROOT, "public/__grok/icon-180.png"));
+  readFileSync(join(TEMPLATE_ROOT, "public/__grok/icon-180-v3.png"));
+  readFileSync(join(TEMPLATE_ROOT, "public/__grok/icon-192-v3.png"));
+  readFileSync(join(TEMPLATE_ROOT, "public/__grok/icon-512-v3.png"));
+  readFileSync(join(TEMPLATE_ROOT, "public/__grok/icon-512-maskable-v3.png"));
+  readFileSync(join(TEMPLATE_ROOT, "public/favicon-32-v3.png"));
   readFileSync(join(TEMPLATE_ROOT, "public/__grok/install/styles.css"));
 });
 
