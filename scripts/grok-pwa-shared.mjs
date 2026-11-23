@@ -171,9 +171,28 @@ export function renderWebManifest(hostHeader) {
       theme_color: "#000000",
       icons: [
         {
-          src: "/__grok/icon-180.png",
+          src: "/__grok/icon-192-v3.png",
+          sizes: "192x192",
+          type: "image/png",
+          purpose: "any",
+        },
+        {
+          src: "/__grok/icon-512-v3.png",
+          sizes: "512x512",
+          type: "image/png",
+          purpose: "any",
+        },
+        {
+          src: "/__grok/icon-512-maskable-v3.png",
+          sizes: "512x512",
+          type: "image/png",
+          purpose: "maskable",
+        },
+        {
+          src: "/__grok/icon-180-v3.png",
           sizes: "180x180",
           type: "image/png",
+          purpose: "any",
         },
       ],
     },
@@ -186,8 +205,8 @@ export function grokPwaHeadTags(appName = DEFAULT_APP_NAME) {
   return [
     // Standalone display comes from the manifest ("display": "standalone");
     // the legacy *-web-app-capable metas it replaces are deliberately absent.
-    ["manifest", '<link rel="manifest" href="/__grok/manifest.webmanifest">'],
-    ["apple-touch-icon", '<link rel="apple-touch-icon" href="/__grok/icon-180.png">'],
+    ["manifest", '<link rel="manifest" href="/__grok/manifest.webmanifest?v=3">'],
+    ["apple-touch-icon", '<link rel="apple-touch-icon" href="/__grok/icon-180-v3.png">'],
     [
       "apple-mobile-web-app-title",
       `<meta name="apple-mobile-web-app-title" content="${escapeHtml(appName)}">`,
@@ -436,8 +455,9 @@ export function injectGrokPwaHead(html, ctx = {}) {
 
   const missing = grokPwaHeadTags(appName)
     .filter(([key]) => {
-      if (key === "manifest") return !next.includes('href="/__grok/manifest.webmanifest"');
-      if (key === "apple-touch-icon") return !next.includes('href="/__grok/icon-180.png"');
+      // No closing quote on the manifest href: allow a cache-bust query (?v=3).
+      if (key === "manifest") return !next.includes('href="/__grok/manifest.webmanifest');
+      if (key === "apple-touch-icon") return !next.includes('href="/__grok/icon-180-v3.png"');
       return !next.includes(`name="${key}"`);
     })
     .map(([, tag]) => tag);
